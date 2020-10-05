@@ -13,6 +13,24 @@ const fmt = {
 	green: "\x1b[32m",
 	reset: "\x1b[0m",
 };
+const help_embed = {
+    "title": "Kalendář",
+    "url": "https://calendar.google.com/calendar/u/0/r/week",
+    "color": 15400120,
+    "thumbnail": {
+      "url": "https://i.imgur.com/cO3d2m0.png"
+    },
+    "fields": [
+      {
+        "name": "streamlink",
+        "value": "```streamlink -o ./videos/name.mts2 \"url\" best --hls-duration 00:15```"
+      },
+      {
+        "name": "upload",
+        "value": "```python upload_video.py --file=\"./videos/IDM.mts2\" --title=\"IUS 2.10.2020 - 1. democviko  \" --privacyStatus=\"unlisted\"```"
+      }
+    ]
+};
 
 async function exec(input, options) {
 	if (options?.terminal)
@@ -42,7 +60,10 @@ async function exec(input, options) {
 }
 
 client.on("message", msg => {
-	if (msg.channel === client.config.channel && msg.author === client.config.owner) {
+	if((msg.content == "help") && (msg.channel === client.config.channel)){		
+		return msg.channel.send({ embed: help_embed });
+	}
+	if (msg.channel === client.config.channel && msg.author != client.config.owner) {
 		console.log(msg.content);
 		exec(msg.content);
 	}
@@ -56,7 +77,7 @@ client.on("ready", async () => {
 	}
 
 	client.config.owner = client.users.cache.get(client.config.owner);
-	if (!client.config.channel) {
+	if (!client.config.owner) {
 		console.error("Invalid user ID set for 'owner' in config.json");
 		process.exit();
 	}
