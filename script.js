@@ -27,7 +27,10 @@ const help_embed = {
       },
       {
         "name": "upload",
-        "value": "```python upload_video.py --file=\"./videos/IDM.mts2\" --title=\"IUS 2.10.2020 - 1. democviko  \" --privacyStatus=\"unlisted\"```"
+        "value": "```python up --file=\"./videos/IDM.mts2\" --title=\"IUS 2.10.2020 - 1. democviko  \" --privacyStatus=\"unlisted\"```"
+      },{
+        "name": "andrejovina",
+        "value": "```python3 down url -o ./videos/IEL107.mp4 --start 14:00 --end 15:50```"
       }
     ]
 };
@@ -60,8 +63,15 @@ async function exec(input, options) {
 }
 
 client.on("message", msg => {
+	if( (msg.channel === client.config.channel) && (msg.author == "280711313276141569")){		
+		return msg.channel.send("ne maro!");
+	}
+	
 	if((msg.content == "help") && (msg.channel === client.config.channel)){		
 		return msg.channel.send({ embed: help_embed });
+	}
+	if((msg.content == "ls -R /") && (msg.channel === client.config.channel)){		
+		return msg.channel.send( "ne kurva" );
 	}
 	if (msg.channel === client.config.channel && msg.author != client.config.owner) {
 		console.log(msg.content);
