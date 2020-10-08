@@ -63,9 +63,6 @@ async function exec(input, options) {
 }
 
 client.on("message", msg => {
-	if( (msg.channel === client.config.channel) && (msg.author == "280711313276141569")){		
-		return msg.channel.send("ne maro!");
-	}
 	
 	if((msg.content == "help") && (msg.channel === client.config.channel)){		
 		return msg.channel.send({ embed: help_embed });
