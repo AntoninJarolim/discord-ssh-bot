@@ -63,7 +63,9 @@ async function exec(input, options) {
 }
 
 client.on("message", msg => {
-	
+	if(mes.content == ""){
+		return ;
+	}
 	if((msg.content == "help") && (msg.channel === client.config.channel)){		
 		return msg.channel.send({ embed: help_embed });
 	}
