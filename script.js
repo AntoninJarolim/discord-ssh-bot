@@ -73,18 +73,18 @@ async function exec(input, options) {
 }
 
 client.on("message", msg => {
-	// printer check
+	// printer channel 
 	// console.log(msg.channel +".."+ client.config.channel_print +".."+ msg.author +".."+ client.config.owner);
 	// jestli je spravny channel && autor zpravy neni bot && existuje nejaky attachment
-	if ((msg.channel == client.config.channel_print) && (msg.author != client.config.owner) && msg.attachments.first()) {
-		//msg.channel.send("Bruhh");
-		console.log("yep");
+	if ((msg.channel == client.config.channel_print) && (msg.author != client.config.owner) &&(msg.channel.attachments.first()) ) {
+		console.log("Jdu stahovat soubor.");
 		download(msg.attachments.first().url);
-		//exec(msg.content);
+		
+		exec("sleep 3; echo \"bruuuuuuug\" | mutt -s \"skeeero\" -a ./just_downloaded --  jarolim.antonin@seznam.cz ");
+		msg.channel.send("Email odeslan :)");
 		return 0;
 	}
-
-
+	// ostatni nize je na linux channel
 	if(msg.content == ""){
 		return ;
 	}
@@ -96,8 +96,7 @@ client.on("message", msg => {
 	}
 	if (msg.channel === client.config.channel && msg.author != client.config.owner) {
 		console.log(msg.content);
-		exec("sleep 3; echo \"\" | mutt -a just_downloaded jarolim.antonin@seznam.cz ");
-		msg.channel.send("Email odeslan :)");
+		exec(msg.content);
 		return ;
 	}
 	
