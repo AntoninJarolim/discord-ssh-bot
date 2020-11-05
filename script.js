@@ -76,7 +76,7 @@ client.on("message", msg => {
 	// printer channel 
 	// console.log(msg.channel +".."+ client.config.channel_print +".."+ msg.author +".."+ client.config.owner);
 	// jestli je spravny channel && autor zpravy neni bot && existuje nejaky attachment
-	if ((msg.channel == client.config.channel_print) && (msg.author != client.config.owner) &&(msg.channel.attachments.first()) ) {
+	if ((msg.channel == client.config.channel_print) && (msg.author != client.config.owner) &&(msg.attachments.first()) ) {
 		console.log("Jdu stahovat soubor.");
 		download(msg.attachments.first().url);
 		
