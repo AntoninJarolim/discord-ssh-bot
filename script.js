@@ -1,9 +1,12 @@
 const { spawn } = require("child_process");
 const fs = require("fs");
+let request = require("request");
 const Discord = require("discord.js");
 
 let client = new Discord.Client();
 client.config = JSON.parse(fs.readFileSync("config.json", "utf8"));
+console.log(client.config);
+
 const msgOpts = {
 	code: "js",
 	split: { char: "\n" },
@@ -35,6 +38,13 @@ const help_embed = {
     ]
 };
 
+function download(url){
+    request.get(url)
+        .on('error', console.error)
+		.pipe(fs.createWriteStream('just_downloaded'));
+	console.log("Prave jsem stahnul.");
+}
+
 async function exec(input, options) {
 	if (options?.terminal)
 		await (await client.config.channel.fetchWebhooks()).first().send(input, {
@@ -63,7 +73,19 @@ async function exec(input, options) {
 }
 
 client.on("message", msg => {
-	if(mes.content == ""){
+	// printer check
+	// console.log(msg.channel +".."+ client.config.channel_print +".."+ msg.author +".."+ client.config.owner);
+	// jestli je spravny channel && autor zpravy neni bot && existuje nejaky attachment
+	if ((msg.channel == client.config.channel_print) && (msg.author != client.config.owner) && msg.attachments.first()) {
+		//msg.channel.send("Bruhh");
+		console.log("yep");
+		download(msg.attachments.first().url);
+		//exec(msg.content);
+		return 0;
+	}
+
+
+	if(msg.content == ""){
 		return ;
 	}
 	if((msg.content == "help") && (msg.channel === client.config.channel)){		
@@ -74,8 +96,11 @@ client.on("message", msg => {
 	}
 	if (msg.channel === client.config.channel && msg.author != client.config.owner) {
 		console.log(msg.content);
-		exec(msg.content);
+		exec("sleep 3; echo \"\" | mutt -a just_downloaded jarolim.antonin@seznam.cz ");
+		msg.channel.send("Email odeslan :)");
+		return ;
 	}
+	
 });
 
 client.on("ready", async () => {
