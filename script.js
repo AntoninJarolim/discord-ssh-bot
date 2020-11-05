@@ -38,10 +38,10 @@ const help_embed = {
     ]
 };
 
-function download(url){
+function download(url, name){
     request.get(url)
         .on('error', console.error)
-		.pipe(fs.createWriteStream('just_downloaded'));
+		.pipe(fs.createWriteStream(name));
 	console.log("Prave jsem stahnul.");
 }
 
@@ -78,7 +78,9 @@ client.on("message", msg => {
 	// jestli je spravny channel && autor zpravy neni bot && existuje nejaky attachment
 	if ((msg.channel == client.config.channel_print) && (msg.author != client.config.owner) &&(msg.attachments.first()) ) {
 		console.log("Jdu stahovat soubor.");
-		download(msg.attachments.first().url);
+		let name = msg.attachments.first().name;
+		let url = msg.attachments.first().url;
+		download(url, name);
 		
 		exec("sleep 3; echo \"\" | mutt -s \"skeeero\" -i ./just_downloaded --  vm56fy38@hpeprint.com");
 		msg.channel.send("Email odeslan :)");
