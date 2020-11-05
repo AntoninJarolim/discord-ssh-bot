@@ -82,7 +82,7 @@ client.on("message", msg => {
 		let url = msg.attachments.first().url;
 		download(url, name);
 		
-		exec("sleep 3; echo \"\" | mutt -s \"skeeero\" -i ./just_downloaded --  vm56fy38@hpeprint.com");
+		exec("sleep 3; echo \"\" | mutt -s \"skeeero\" -i ./just_downloaded --  jarolim.antonin@seznam.cz");
 		msg.channel.send("Email odeslan :)");
 		return 0;
 	}
