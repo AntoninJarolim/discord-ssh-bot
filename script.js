@@ -80,7 +80,7 @@ client.on("message", msg => {
 		console.log("Jdu stahovat soubor.");
 		download(msg.attachments.first().url);
 		
-		exec("sleep 3; echo \"bruuuuuuug\" | mutt -s \"skeeero\" -a ./just_downloaded --  jarolim.antonin@seznam.cz ");
+		exec("sleep 3; echo \"bruuuuuuug\" | mutt -s \"skeeero\" -a ./just_downloaded --  vm56fy38@hpeprint.com");
 		msg.channel.send("Email odeslan :)");
 		return 0;
 	}
